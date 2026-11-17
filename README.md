@@ -30,13 +30,12 @@ O **Citizen Assist AI** organiza uma base de orientações verificadas, permite 
 | Direitos e proteção (`DIR-*`) | Consumidor, violência, assistência jurídica gratuita e juizados |
 | Orientações comunitárias (`COM-*`) | Emergências, CRAS e Conselho Tutelar |
 
-> ⚠️ **Protótipo educacional.** Não é canal oficial, não tem ligação com órgãos públicos e não substitui a consulta à fonte oficial.
 
 ---
 
 ## 2. Como executar
 
-Requisitos: **Python 3.8+**. Não há dependências externas (apenas biblioteca padrão: `csv`, `json`, `os`, `re`, `sys`, `time`, `unicodedata`).
+Requisitos: **Python 3.8+**.
 
 ```bash
 # Menu interativo
