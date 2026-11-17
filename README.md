@@ -60,8 +60,6 @@ python src/sistema.py --testes
     └── uso_ia.md                  # registro do uso de IA e validação crítica
 ```
 
-> Ajuste a estrutura acima para coincidir com o modelo oficial da coordenação, caso haja diferenças.
-
 ---
 
 ## 3. Base de conhecimento
