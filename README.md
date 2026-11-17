@@ -1,7 +1,5 @@
 # Citizen Assist AI
 
-> Assistente digital de orientação cidadã (protótipo em Python, interface de texto) — Global Solution 2026.2 · FIAP
-
 ## 👥 Equipe
 
 | Nome | RM |
