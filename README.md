@@ -73,8 +73,6 @@ A resposta usa **somente a base**, sem IA externa nem API.
 | **A – Direto** | Guia breve | Orientação + fonte (+ aviso) | Usar só a base e citar a fonte |
 | **B – Estruturado** (padrão) | Assistente **não oficial** | ASSUNTO / ORIENTAÇÃO / FONTE / VERIFICADO EM / AVISO / NOTA | Usar só a base, citar fonte e data, avisar que não é oficial, destacar confirmação |
 
-**Comparação:** em 5 critérios objetivos (fonte, data, aviso de não oficial, aviso de confirmação, rótulos), o Modelo A atendeu **2,00/5** e o Modelo B **5,00/5**. O **B** é mais claro e consistente por sempre trazer fonte, data e natureza não oficial. O A é mais curto, mas menos transparente. Os critérios favorecem o formato mais completo, então a comparação mede consistência e não preferência do usuário.
-
 **Tratamento de limitações:**
 
 | Situação | Comportamento |
