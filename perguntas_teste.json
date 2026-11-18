@@ -1,0 +1,21 @@
+[
+  {"id": "T01", "tipo": "direta", "entrada": "Como solicitar a primeira via da carteira de identidade?", "esperado": "DOC-001"},
+  {"id": "T02", "tipo": "reformulacao", "entrada": "quero tirar o novo RG", "esperado": "DOC-001"},
+  {"id": "T03", "tipo": "direta", "entrada": "Como acessar a identidade digital no celular?", "esperado": "DOC-002"},
+  {"id": "T04", "tipo": "direta", "entrada": "Como emitir a segunda via do CPF?", "esperado": "DOC-003"},
+  {"id": "T05", "tipo": "reformulacao", "entrada": "perdi meu comprovante de CPF, como imprimir de novo?", "esperado": "DOC-003"},
+  {"id": "T06", "tipo": "direta", "entrada": "Como pedir segunda via da certidão de nascimento?", "esperado": "DOC-005"},
+  {"id": "T07", "tipo": "reformulacao", "entrada": "como acesso minha carteira de trabalho digital?", "esperado": "DOC-007"},
+  {"id": "T08", "tipo": "direta", "entrada": "Quais documentos preciso para o Cadastro Único?", "esperado": "SRV-002"},
+  {"id": "T09", "tipo": "reformulacao", "entrada": "fui demitido, como peço o seguro-desemprego?", "esperado": "SRV-005"},
+  {"id": "T10", "tipo": "direta", "entrada": "Posso devolver uma compra feita na internet?", "esperado": "DIR-001"},
+  {"id": "T11", "tipo": "reformulacao", "entrada": "sofri violência doméstica, para quem eu ligo?", "esperado": "DIR-003"},
+  {"id": "T12", "tipo": "direta", "entrada": "Qual o telefone do SAMU?", "esperado": "COM-001"},
+  {"id": "T13", "tipo": "fora_do_tema", "entrada": "Qual a previsão do tempo para amanhã?", "esperado": "SEM_RESPOSTA"},
+  {"id": "T14", "tipo": "fora_do_tema", "entrada": "Como declarar criptomoedas no imposto de renda?", "esperado": "SEM_RESPOSTA"},
+  {"id": "T15", "tipo": "limite", "entrada": "", "esperado": "ENTRADA_INVALIDA"},
+  {"id": "T16", "tipo": "limite", "entrada": "segunda via", "esperado": "AMBIGUA"},
+  {"id": "T17", "tipo": "limite", "entrada": "12345 !!! ???", "esperado": "ENTRADA_INVALIDA"},
+  {"id": "T18", "tipo": "limite", "entrada": "meu cpf é 123.456.789-09, e agora?", "esperado": "ENTRADA_INVALIDA"},
+  {"id": "T19", "tipo": "limite", "entrada": "Posso ser preso por dívida de cartão de crédito?", "esperado": "SEM_RESPOSTA"}
+]

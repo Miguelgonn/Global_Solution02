@@ -1,0 +1,201 @@
+{
+  "versao": "1.0",
+  "descricao": "Base de orientações do Citizen Assist AI. Cada registro cita uma fonte oficial. Edite este arquivo para corrigir ou acrescentar orientações; não é preciso alterar o código.",
+  "temas": {
+    "documentacao": {"nome": "Documentação", "descricao": "RG/CIN, CPF, certidões, título de eleitor e carteira de trabalho"},
+    "servicos": {"nome": "Serviços públicos e benefícios", "descricao": "INSS, Cadastro Único, Bolsa Família, SUS e seguro-desemprego"},
+    "direitos": {"nome": "Direitos e proteção", "descricao": "Consumidor, violência, assistência jurídica gratuita e juizados"},
+    "comunitario": {"nome": "Orientações comunitárias", "descricao": "Emergências, CRAS e Conselho Tutelar"}
+  },
+  "registros": [
+    {
+      "id": "DOC-001", "tema": "documentacao", "subtema": "Identidade (RG/CIN)",
+      "pergunta": "Como solicitar a primeira via da Carteira de Identidade Nacional (CIN)?",
+      "palavras_chave": ["rg", "cin", "carteira de identidade", "identidade", "novo rg", "primeira via", "tirar rg"],
+      "orientacao": "A Carteira de Identidade Nacional (CIN) substitui gradualmente o RG. A primeira via é gratuita. O agendamento costuma ser feito pelo órgão de identificação do seu estado, mas o atendimento e a coleta biométrica são presenciais. Em geral são pedidos CPF e certidão de nascimento (ou de casamento); as exigências podem variar por estado.",
+      "referencia": "https://www.gov.br/identidade",
+      "data_verificacao": "2026-11-14", "status_conferencia": "conferido na pesquisa (confirmar texto na página oficial)",
+      "requer_confirmacao": true, "relacionados": ["DOC-002", "DOC-003", "DOC-005"]
+    },
+    {
+      "id": "DOC-002", "tema": "documentacao", "subtema": "Identidade (RG/CIN)",
+      "pergunta": "Como acessar a versão digital da CIN no celular?",
+      "palavras_chave": ["cin digital", "identidade digital", "rg digital", "carteira de documentos", "documento no celular", "app gov.br"],
+      "orientacao": "A versão digital só fica disponível depois que a CIN física for emitida. Abra o aplicativo gov.br, entre com sua conta, acesse a 'Carteira de documentos' e adicione a Carteira de Identidade Nacional.",
+      "referencia": "https://www.gov.br/identidade",
+      "data_verificacao": "2026-11-14", "status_conferencia": "conferido na pesquisa (confirmar texto na página oficial)",
+      "requer_confirmacao": true, "relacionados": ["DOC-001", "DOC-007"]
+    },
+    {
+      "id": "DOC-003", "tema": "documentacao", "subtema": "CPF",
+      "pergunta": "Como obter a segunda via ou comprovante do CPF?",
+      "palavras_chave": ["cpf", "segunda via cpf", "2 via cpf", "comprovante de cpf", "imprimir cpf", "cartao cpf"],
+      "orientacao": "O comprovante de inscrição no CPF pode ser emitido gratuitamente no site da Receita Federal, no portal/app gov.br ou no e-CAC. Quem cobrar taxa por esse comprovante em canais não oficiais pode estar aplicando golpe. Se você não souber o número do CPF, pode ser necessário atendimento presencial.",
+      "referencia": "https://www.gov.br/pt-br/servicos/obter-cartao-de-cpf",
+      "data_verificacao": "2026-11-14", "status_conferencia": "conferido na pesquisa (confirmar texto na página oficial)",
+      "requer_confirmacao": false, "relacionados": ["DOC-004", "DOC-001"]
+    },
+    {
+      "id": "DOC-004", "tema": "documentacao", "subtema": "CPF",
+      "pergunta": "Como me inscrever no CPF pela primeira vez?",
+      "palavras_chave": ["cpf", "tirar cpf", "inscricao cpf", "primeiro cpf", "fazer cpf", "inscrever no cpf"],
+      "orientacao": "A inscrição no CPF é gratuita e pode ser feita pelo serviço 'Inscrever no CPF' no portal gov.br / site da Receita Federal, ou presencialmente em postos conveniados com agendamento.",
+      "referencia": "https://www.gov.br/pt-br/servicos/inscrever-no-cpf",
+      "data_verificacao": "2026-11-14", "status_conferencia": "conferido na pesquisa (confirmar texto na página oficial)",
+      "requer_confirmacao": true, "relacionados": ["DOC-003", "DOC-001"]
+    },
+    {
+      "id": "DOC-005", "tema": "documentacao", "subtema": "Certidões",
+      "pergunta": "Como pedir a segunda via da certidão de nascimento ou casamento?",
+      "palavras_chave": ["certidao de nascimento", "certidao de casamento", "segunda via certidao", "2 via certidao", "certidao", "registro civil", "cartorio"],
+      "orientacao": "A segunda via é solicitada no cartório de registro civil onde o ato foi registrado ou pelo portal nacional do Registro Civil, que permite pedir certidões online. Pode haver cobrança de emolumentos na segunda via; o registro de nascimento e a primeira certidão são gratuitos por lei.",
+      "referencia": "https://www.registrocivil.org.br",
+      "data_verificacao": null, "status_conferencia": "PENDENTE: abrir a fonte e conferir antes de preencher a data",
+      "requer_confirmacao": true, "relacionados": ["DOC-001", "DOC-004"]
+    },
+    {
+      "id": "DOC-006", "tema": "documentacao", "subtema": "Título de eleitor",
+      "pergunta": "Como emitir ou regularizar o título de eleitor?",
+      "palavras_chave": ["titulo de eleitor", "titulo eleitoral", "e-titulo", "local de votacao", "zona eleitoral", "regularizar titulo", "votar"],
+      "orientacao": "Serviços do título de eleitor (emissão, regularização e consulta do local de votação) são oferecidos pela Justiça Eleitoral, pelo portal do TSE, pelo aplicativo e-Título e pelos cartórios eleitorais. Prazos e exigências variam conforme o calendário eleitoral.",
+      "referencia": "https://www.tse.jus.br",
+      "data_verificacao": null, "status_conferencia": "PENDENTE: abrir a fonte e conferir antes de preencher a data",
+      "requer_confirmacao": true, "relacionados": ["DOC-001", "DOC-007"]
+    },
+    {
+      "id": "DOC-007", "tema": "documentacao", "subtema": "Carteira de trabalho",
+      "pergunta": "Como tirar ou acessar a Carteira de Trabalho Digital?",
+      "palavras_chave": ["carteira de trabalho", "ctps", "carteira de trabalho digital", "trabalho no celular"],
+      "orientacao": "A Carteira de Trabalho é emitida em formato digital, a partir do CPF, pelo aplicativo Carteira de Trabalho Digital ou pelo portal gov.br. O número da CTPS digital é o próprio CPF.",
+      "referencia": "https://www.gov.br/trabalho-e-emprego",
+      "data_verificacao": null, "status_conferencia": "PENDENTE: abrir a fonte e conferir antes de preencher a data",
+      "requer_confirmacao": true, "relacionados": ["SRV-005", "DOC-004"]
+    },
+    {
+      "id": "SRV-001", "tema": "servicos", "subtema": "INSS",
+      "pergunta": "Como acessar serviços do INSS (extrato, aposentadoria, agendamento)?",
+      "palavras_chave": ["inss", "meu inss", "aposentadoria", "extrato inss", "beneficio inss", "agendar inss", "pericia"],
+      "orientacao": "Os serviços do INSS são acessados pelo Meu INSS (site ou aplicativo) com conta gov.br, ou pela central telefônica 135. O próprio canal permite consultar extratos, pedir benefícios e agendar atendimento. Desconfie de intermediários que cobram para 'liberar' benefícios.",
+      "referencia": "https://meu.inss.gov.br",
+      "data_verificacao": null, "status_conferencia": "PENDENTE: abrir a fonte e conferir antes de preencher a data",
+      "requer_confirmacao": true, "relacionados": ["DOC-004", "SRV-002"]
+    },
+    {
+      "id": "SRV-002", "tema": "servicos", "subtema": "Assistência social",
+      "pergunta": "Quais documentos preciso para o Cadastro Único (CadÚnico)?",
+      "palavras_chave": ["cadunico", "cadastro unico", "cad unico", "cadastrar familia", "documentos cadastro unico", "baixa renda"],
+      "orientacao": "O Cadastro Único é feito presencialmente no CRAS ou posto de atendimento indicado pela prefeitura. A pessoa responsável pela família precisa de CPF ou título de eleitor; para os demais integrantes, pelo menos um documento de identificação (por exemplo, certidão de nascimento ou casamento, CPF, RG ou carteira de trabalho).",
+      "referencia": "https://www.gov.br/mds",
+      "data_verificacao": null, "status_conferencia": "PENDENTE: abrir a fonte e conferir antes de preencher a data",
+      "requer_confirmacao": true, "relacionados": ["SRV-003", "COM-002", "DOC-004"]
+    },
+    {
+      "id": "SRV-003", "tema": "servicos", "subtema": "Assistência social",
+      "pergunta": "Como receber o Bolsa Família?",
+      "palavras_chave": ["bolsa familia", "auxilio", "beneficio social", "programa social", "renda familia"],
+      "orientacao": "O Bolsa Família exige que a família esteja inscrita e com dados atualizados no Cadastro Único. A seleção segue critérios do programa; não há como 'pedir' o benefício diretamente em sites não oficiais. Procure o CRAS ou a assistência social do seu município.",
+      "referencia": "https://www.gov.br/mds",
+      "data_verificacao": null, "status_conferencia": "PENDENTE: abrir a fonte e conferir antes de preencher a data",
+      "requer_confirmacao": true, "relacionados": ["SRV-002", "COM-002"]
+    },
+    {
+      "id": "SRV-004", "tema": "servicos", "subtema": "Saúde",
+      "pergunta": "Como usar o SUS e o Meu SUS Digital?",
+      "palavras_chave": ["sus", "cartao sus", "meu sus digital", "posto de saude", "ubs", "saude publica", "atendimento medico"],
+      "orientacao": "O SUS atende gratuitamente a toda a população, começando em geral pela Unidade Básica de Saúde (UBS) do seu bairro. O aplicativo Meu SUS Digital reúne informações como vacinas e atendimentos. Em urgência, procure uma UPA ou ligue 192 (SAMU).",
+      "referencia": "https://www.gov.br/saude",
+      "data_verificacao": null, "status_conferencia": "PENDENTE: abrir a fonte e conferir antes de preencher a data",
+      "requer_confirmacao": false, "relacionados": ["COM-001", "SRV-002"]
+    },
+    {
+      "id": "SRV-005", "tema": "servicos", "subtema": "Trabalho",
+      "pergunta": "Como pedir o seguro-desemprego?",
+      "palavras_chave": ["seguro desemprego", "demitido", "demissao", "dispensado", "desempregado", "perdi o emprego"],
+      "orientacao": "Trabalhadores formais dispensados sem justa causa podem requerer o seguro-desemprego, em regra entre 7 e 120 dias após a dispensa, pelo aplicativo Carteira de Trabalho Digital, pelo portal gov.br ou em unidades de atendimento. Valor e parcelas dependem do tempo trabalhado e do salário.",
+      "referencia": "https://www.gov.br/trabalho-e-emprego",
+      "data_verificacao": null, "status_conferencia": "PENDENTE: abrir a fonte e conferir antes de preencher a data",
+      "requer_confirmacao": true, "relacionados": ["DOC-007", "SRV-001"]
+    },
+    {
+      "id": "DIR-001", "tema": "direitos", "subtema": "Consumidor",
+      "pergunta": "Posso desistir de uma compra feita pela internet?",
+      "palavras_chave": ["arrependimento", "devolver compra", "desistir da compra", "compra pela internet", "compra online", "cancelar compra", "7 dias"],
+      "orientacao": "Em compras feitas fora do estabelecimento (internet, telefone), o Código de Defesa do Consumidor garante o direito de desistir em até 7 dias a contar da assinatura do contrato ou do recebimento do produto, com devolução dos valores pagos.",
+      "referencia": "https://www.planalto.gov.br/ccivil_03/leis/l8078compilado.htm",
+      "data_verificacao": null, "status_conferencia": "PENDENTE: conferir o art. 49 do CDC na fonte",
+      "requer_confirmacao": false, "relacionados": ["DIR-002", "DIR-005"]
+    },
+    {
+      "id": "DIR-002", "tema": "direitos", "subtema": "Consumidor",
+      "pergunta": "Como reclamar de uma empresa?",
+      "palavras_chave": ["reclamar de empresa", "reclamacao", "procon", "consumidor.gov", "problema com empresa", "mau atendimento", "direito do consumidor"],
+      "orientacao": "Registre primeiro a reclamação na própria empresa e guarde protocolos. Se não resolver, use a plataforma consumidor.gov.br ou procure o Procon da sua cidade ou estado.",
+      "referencia": "https://www.consumidor.gov.br",
+      "data_verificacao": null, "status_conferencia": "PENDENTE: abrir a fonte e conferir antes de preencher a data",
+      "requer_confirmacao": false, "relacionados": ["DIR-001", "DIR-005"]
+    },
+    {
+      "id": "DIR-003", "tema": "direitos", "subtema": "Violência",
+      "pergunta": "Para quem ligar em caso de violência contra a mulher?",
+      "palavras_chave": ["violencia domestica", "violencia contra a mulher", "ligue 180", "maria da penha", "agressao", "medida protetiva"],
+      "orientacao": "A Central de Atendimento à Mulher (Ligue 180) é gratuita e funciona todos os dias. A Lei Maria da Penha prevê medidas protetivas. Em risco imediato, ligue 190.",
+      "referencia": "https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11340.htm",
+      "data_verificacao": null, "status_conferencia": "PENDENTE: conferir telefone e funcionamento em página do governo federal",
+      "requer_confirmacao": true, "relacionados": ["COM-001", "DIR-004", "DIR-006"]
+    },
+    {
+      "id": "DIR-004", "tema": "direitos", "subtema": "Violência",
+      "pergunta": "Como denunciar violação de direitos humanos (crianças, idosos, pessoas com deficiência)?",
+      "palavras_chave": ["disque 100", "denuncia", "denunciar", "direitos humanos", "maus tratos", "violencia contra idoso", "violencia contra crianca"],
+      "orientacao": "O Disque 100 recebe denúncias de violações de direitos humanos, como violência contra crianças, adolescentes, idosos e pessoas com deficiência. A ligação é gratuita. Em risco imediato, ligue 190.",
+      "referencia": "https://www.gov.br/mdh",
+      "data_verificacao": null, "status_conferencia": "PENDENTE: abrir a fonte e conferir antes de preencher a data",
+      "requer_confirmacao": true, "relacionados": ["COM-003", "DIR-003", "COM-001"]
+    },
+    {
+      "id": "DIR-005", "tema": "direitos", "subtema": "Justiça",
+      "pergunta": "Posso entrar com uma ação de pequeno valor sem advogado?",
+      "palavras_chave": ["juizado especial", "pequenas causas", "acao sem advogado", "processar empresa", "entrar na justica", "causas pequenas"],
+      "orientacao": "O Juizado Especial Cível julga causas de menor complexidade, até 40 salários mínimos. Em causas de até 20 salários mínimos, a presença de advogado é facultativa.",
+      "referencia": "https://www.planalto.gov.br/ccivil_03/leis/l9099.htm",
+      "data_verificacao": null, "status_conferencia": "PENDENTE: conferir a Lei 9.099/1995 na fonte",
+      "requer_confirmacao": true, "relacionados": ["DIR-006", "DIR-002"]
+    },
+    {
+      "id": "DIR-006", "tema": "direitos", "subtema": "Justiça",
+      "pergunta": "Não tenho condições de pagar advogado. O que fazer?",
+      "palavras_chave": ["defensoria publica", "advogado gratuito", "sem dinheiro para advogado", "assistencia juridica", "justica gratuita", "defensor"],
+      "orientacao": "A Defensoria Pública oferece orientação jurídica e defesa gratuitas a quem comprova não ter condições de pagar um advogado. Procure a Defensoria do seu estado (ou a DPU, para causas federais).",
+      "referencia": "https://www.dpu.def.br",
+      "data_verificacao": null, "status_conferencia": "PENDENTE: abrir a fonte e conferir antes de preencher a data",
+      "requer_confirmacao": true, "relacionados": ["DIR-005", "DIR-003"]
+    },
+    {
+      "id": "COM-001", "tema": "comunitario", "subtema": "Emergências",
+      "pergunta": "Quais são os números de emergência?",
+      "palavras_chave": ["emergencia", "samu", "192", "190", "193", "policia", "bombeiros", "ambulancia", "telefone de emergencia"],
+      "orientacao": "Polícia Militar: 190. SAMU (emergência médica): 192. Corpo de Bombeiros: 193. As ligações são gratuitas.",
+      "referencia": "https://www.gov.br/saude",
+      "data_verificacao": null, "status_conferencia": "PENDENTE: confirmar número e fonte em página oficial",
+      "requer_confirmacao": false, "relacionados": ["SRV-004", "DIR-003", "DIR-004"]
+    },
+    {
+      "id": "COM-002", "tema": "comunitario", "subtema": "Assistência social",
+      "pergunta": "O que é o CRAS e quando procurar?",
+      "palavras_chave": ["cras", "assistencia social", "centro de referencia", "servico social", "orientacao social"],
+      "orientacao": "O CRAS (Centro de Referência de Assistência Social) é a porta de entrada da assistência social no município. Atende famílias em situação de vulnerabilidade, orienta sobre benefícios e faz o Cadastro Único.",
+      "referencia": "https://www.gov.br/mds",
+      "data_verificacao": null, "status_conferencia": "PENDENTE: abrir a fonte e conferir antes de preencher a data",
+      "requer_confirmacao": false, "relacionados": ["SRV-002", "SRV-003", "COM-003"]
+    },
+    {
+      "id": "COM-003", "tema": "comunitario", "subtema": "Crianças e adolescentes",
+      "pergunta": "Quando procurar o Conselho Tutelar?",
+      "palavras_chave": ["conselho tutelar", "crianca em risco", "direitos da crianca", "eca", "adolescente em risco", "abandono"],
+      "orientacao": "O Conselho Tutelar atua para proteger crianças e adolescentes cujos direitos estejam ameaçados ou violados (Estatuto da Criança e do Adolescente). Qualquer pessoa pode acionar o conselho do seu município.",
+      "referencia": "https://www.planalto.gov.br/ccivil_03/leis/l8069.htm",
+      "data_verificacao": null, "status_conferencia": "PENDENTE: conferir o ECA na fonte",
+      "requer_confirmacao": false, "relacionados": ["DIR-004", "COM-002", "COM-001"]
+    }
+  ]
+}
