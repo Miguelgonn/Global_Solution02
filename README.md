@@ -124,7 +124,6 @@ Parece um número de documento. Por privacidade, não informe dados pessoais; re
 | Perguntar sobre seguro-desemprego em texto | `<sim/não>` | `<s>` | `<...>` |
 | Navegar até um assunto relacionado | `<sim/não>` | `<s>` | `<...>` |
 
-**Interpretação:** a busca atende bem às perguntas previstas, incluindo reformulações, e as limitações são tratadas corretamente. O tempo inferior a 1 ms mostra custo desprezível; na prática, o tempo do usuário é dominado por digitar e ler.
 
 
 ## 7. Cuidados
