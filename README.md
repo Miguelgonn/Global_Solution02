@@ -134,12 +134,16 @@ Parece um número de documento. Por privacidade, não informe dados pessoais; re
 
 ## 8. Uso de IA
 
+## Uso de Inteligência Artificial
+
+Durante o desenvolvimento deste projeto, utilizamos ferramentas de Inteligência Artificial como apoio na organização, estruturação e otimização do código-fonte.
+
+Após a utilização da IA, realizamos testes para verificar o funcionamento do código e avaliar se as soluções propostas atendiam aos requisitos do projeto. Com base nos resultados obtidos, analisamos e adaptamos os trechos necessários, realizando alterações conforme identificamos ser adequado.
+
+Dessa forma, a IA foi utilizada como uma ferramenta de apoio ao desenvolvimento, enquanto a validação, os testes e as decisões sobre as adaptações foram realizados pela equipe.mos os menus e entradas disponíveis.
+
 Foi usada uma ferramenta de IA (Claude, da Anthropic) como apoio à revisão do projeto .
 
-Os resultados dos testes (taxa de acerto, tempos e comparação dos modelos) foram obtidos executando python src/sistema.py --testes, e não escritos manualmente.
-Os exemplos de respostas foram conferidos com a saída real do sistema.
-As orientações da base foram conferidas nas fontes oficiais indicadas em referencia.
-A IA não gera as respostas do assistente: o protótipo não usa modelo externo em tempo de execução, e todas as respostas vêm da base verificada.
 
 ## 9. Conclusões, limitações e melhorias
 
