@@ -1,4 +1,4 @@
-# Citizen Assist AI
+# Global Solution Citizen Assist AI
 
 ## 👥 Equipe
 
