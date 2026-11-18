@@ -12,345 +12,143 @@
 **Vídeo de apresentação :** ``
 
 ---
-
 ## 1. Problema, público e temas
 
-Cidadãos precisam de orientações confiáveis sobre documentos, serviços e direitos, mas as informações costumam estar espalhadas, mal organizadas e sujeitas a interpretações erradas. Isso torna a busca lenta e confusa.
+Informações sobre documentos, serviços e direitos costumam estar espalhadas e confusas. O Citizen Assist AI organiza orientações verificadas, permite escolher um tema ou digitar uma pergunta, mostra a **fonte** e **avisa quando não há resposta confiável**.
 
-O **Citizen Assist AI** organiza uma base de orientações verificadas, permite que a pessoa **escolha um tema no menu ou escreva uma pergunta**, localiza a orientação mais adequada, **cita a fonte** e **avisa quando não há resposta suficiente** na base.
+**Público:** cidadãos com dúvidas simples do cotidiano.
 
-**Público beneficiado:** qualquer cidadão com dúvidas simples do cotidiano, sobretudo quem tem pouca familiaridade com portais públicos.
-
-**Temas abordados (4 temas, 21 registros):**
-
-| Tema | Conteúdo |
-|---|---|
-| Documentação (`DOC-*`) | RG/CIN, CPF, certidões, título de eleitor e carteira de trabalho |
-| Serviços públicos e benefícios (`SRV-*`) | INSS, Cadastro Único, Bolsa Família, SUS e seguro-desemprego |
-| Direitos e proteção (`DIR-*`) | Consumidor, violência, assistência jurídica gratuita e juizados |
-| Orientações comunitárias (`COM-*`) | Emergências, CRAS e Conselho Tutelar |
-
-
----
+**Temas (4 temas, 21 registros):** Documentação (RG/CIN, CPF, certidões, título, carteira de trabalho) · Serviços e benefícios (INSS, CadÚnico, Bolsa Família, SUS, seguro-desemprego) · Direitos e proteção (consumidor, violência, defensoria, juizados) · Orientações comunitárias (emergências, CRAS, Conselho Tutelar).
 
 ## 2. Como executar
 
-Requisitos: **Python 3.8+**.
+Python 3.8+, sem dependências externas.
 
 ```bash
-# Menu interativo
-python src/sistema.py
-
-# Bateria de testes (gera docs/resultados_testes.csv)
-python src/sistema.py --testes
+python src/sistema.py            # menu interativo
+python src/sistema.py --testes   # gera docs/resultados_testes.csv
 ```
 
-### Estrutura do repositório
-
 ```
-.
-├── README.md
-├── src/
-│   └── sistema.py                 # código-fonte (carga, busca, respostas, menu e testes)
-├── data/
-│   ├── base_conhecimento.json     # base de orientações verificadas
-│   └── perguntas_teste.json       # 19 casos de teste
-└── docs/
-    ├── resultados_testes.csv      # gerado por --testes
-    └── uso_ia.md                  # registro do uso de IA e validação crítica
+src/sistema.py                 código
+data/base_conhecimento.json    base de orientações
+data/perguntas_teste.json      19 casos de teste
+docs/resultados_testes.csv     resultados dos testes
+docs/uso_ia.md                 uso de IA
 ```
 
----
+## 3. Base de conhecimento, estruturas e busca
 
-## 3. Base de conhecimento
+**Arquivo:** `data/base_conhecimento.json`, com `temas` (dicionário) e `registros` (lista).
 
-### Formato (`data/base_conhecimento.json`)
-
-O arquivo possui dois blocos: `temas` (dicionário) e `registros` (lista).
-
-```json
-{
-  "temas":     { "documentacao": { "nome": "Documentação", "descricao": "..." } },
-  "registros": [ { "id": "DOC-003", "tema": "documentacao", "subtema": "CPF", "...": "..." } ]
-}
-```
-
-| Campo | Obrigatório | Descrição |
+| Campo | Obrigatório | Uso |
 |---|:---:|---|
-| `id` | ✅ | Identificador único (ex.: `DOC-001`) |
-| `tema` | ✅ | Chave que deve existir em `temas` |
-| `palavras_chave` | ✅ | Lista não vazia de termos/frases usados na busca |
-| `orientacao` | ✅ | Orientação resumida apresentada ao usuário |
-| `referencia` | ✅ | URL da fonte consultada |
-| `data_verificacao` | ✅ | Data em que a informação foi conferida na fonte |
-| `subtema` | opcional | Nível intermediário da hierarquia (padrão: `"Geral"`) |
-| `pergunta` | opcional | Pergunta-modelo exibida nos menus |
-| `requer_confirmacao` | opcional | Se `true` (padrão), exibe aviso para confirmar requisitos atuais |
-| `relacionados` | opcional | Lista de ids ligados a este registro (arestas do grafo) |
+| `id`, `tema`, `palavras_chave`, `orientacao`, `referencia`, `data_verificacao` | ✅ | Dados essenciais de cada orientação |
+| `subtema`, `pergunta`, `requer_confirmacao`, `relacionados` | opcional | Menus, aviso de confirmação e navegação |
 
-### Validação na carga (`carregar()`)
+**Origem:** cada orientação é um resumo de uma fonte pública oficial (gov.br, Meu INSS, TSE, Consumidor.gov.br, DPU, leis no Planalto), registrada em `referencia`, com a data da conferência em `data_verificacao`.
 
-- Arquivo **ausente ou vazio** → mensagem clara e o programa não inicia.
-- **JSON inválido** ou sem `temas`/`registros` → mensagem de formato esperado.
-- Registro com **campos obrigatórios ausentes**, **tema inexistente**, **palavras-chave vazias** ou **id repetido** → é ignorado e listado em *Avisos da base* (opção 4 do menu).
-- Registro sem data de verificação → aviso "ainda não conferido".
-- Ligações em `relacionados` para ids inexistentes ou para o próprio registro são removidas.
+**Validação na carga:** arquivo ausente, vazio ou com JSON inválido impede o início com mensagem clara. Registros com campos ausentes, tema inexistente ou id repetido são ignorados e listados em "Avisos da base" (opção 4 do menu).
 
-### Como acrescentar ou corrigir orientações
+**Manutenção:** para acrescentar ou corrigir orientações basta editar o JSON, sem mexer no código.
 
-Basta editar `data/base_conhecimento.json`. **Nenhuma regra do programa precisa ser alterada:** menus, busca e navegação são construídos a partir dos dados.
+**Estruturas:** dicionários (temas e registros por id), listas (palavras-chave e resultados) e conjuntos (comparação de palavras).
 
----
+**Organização dos assuntos:** hierarquia `tema → subtema → registro` e um **grafo simples** em `relacionados` (lista de adjacência). Dois assuntos são ligados quando um é o passo seguinte do outro (ex.: RG ↔ CIN digital; seguro-desemprego ↔ Carteira de Trabalho). Após cada resposta, o menu oferece esses assuntos para continuar a consulta.
 
-## 4. Estruturas de dados e organização dos temas
+**Estratégia de busca (palavras-chave com pontuação):**
 
-- **Dicionário** `temas` (id do tema → nome e descrição).
-- **Dicionário** `regs` (id do registro → registro), com recuperação direta por identificador.
-- **Listas** de palavras-chave, de resultados ordenados e de relacionados.
-- **Conjuntos (`set`)** para comparar palavras da consulta com as palavras-chave.
+1. Normaliza o texto (minúsculas, sem acentos, sem *stopwords*, plural simplificado).
+2. Pontua cada registro: **+4** por frase de palavra-chave inteira (+1 por palavra extra), **+2** por palavra em palavra-chave, **+1** por palavra na pergunta/subtema.
+3. Descarta registros abaixo de 3 pontos e ordena do maior para o menor (desempate por id).
 
-### Hierarquia e grafo simples
+**Várias correspondências:** mostra o melhor resultado. Se os dois primeiros ficam a até 1 ponto e são de subtemas diferentes, a consulta é **ambígua** e o usuário escolhe entre até 4 opções. Se nenhum atinge o mínimo, informa que não há resposta.
 
-Os assuntos seguem uma **hierarquia de três níveis**: `tema → subtema → registro`.
+## 4. Regras de resposta, modelos de prompt e limitações
 
-Além disso, o campo `relacionados` forma um **grafo dirigido simples** (lista de adjacência): cada registro é um nó e cada id em `relacionados` é uma aresta para um assunto de continuidade. Exemplo:
+A resposta usa **somente a base**, sem IA externa nem API.
 
-```
-DOC-001 (RG/CIN) ──► DOC-002 (CIN digital)
-        │        └──► DOC-003 (CPF)
-        └───────────► DOC-005 (Certidões)
+| Modelo | Papel | Formato | Regras |
+|---|---|---|---|
+| **A – Direto** | Guia breve | Orientação + fonte (+ aviso) | Usar só a base e citar a fonte |
+| **B – Estruturado** (padrão) | Assistente **não oficial** | ASSUNTO / ORIENTAÇÃO / FONTE / VERIFICADO EM / AVISO / NOTA | Usar só a base, citar fonte e data, avisar que não é oficial, destacar confirmação |
 
-SRV-002 (CadÚnico) ──► SRV-003 (Bolsa Família) ──► COM-002 (CRAS)
-```
+**Comparação:** em 5 critérios objetivos (fonte, data, aviso de não oficial, aviso de confirmação, rótulos), o Modelo A atendeu **2,00/5** e o Modelo B **5,00/5**. O **B** é mais claro e consistente por sempre trazer fonte, data e natureza não oficial. O A é mais curto, mas menos transparente. Os critérios favorecem o formato mais completo, então a comparação mede consistência e não preferência do usuário.
 
-Após cada resposta, o menu lista os assuntos relacionados (navegação entre 3 ou mais assuntos); o usuário pode seguir de um nó a outro até voltar ao menu com `0`.
+**Tratamento de limitações:**
 
----
-
-## 5. Estratégia de busca
-
-Busca por **palavras-chave com pontuação**, em quatro etapas (`tokens`, `pontuar`, `buscar`):
-
-1. **Normalização:** minúsculas, remoção de acentos e pontuação, remoção de *stopwords* (artigos, preposições, "como", "quero", "preciso"...) e redução simples de plural (remove o `s` final).
-2. **Pontuação** de cada registro em relação à consulta:
-   - **+4** (mais 1 por palavra extra da frase) para cada **frase de palavra-chave inteira** encontrada na consulta (ex.: "carteira de trabalho");
-   - **+2** por palavra da consulta presente nas palavras-chave;
-   - **+1** por palavra que aparece apenas na pergunta-modelo ou no subtema.
-3. **Corte mínimo:** registros com menos de `MIN_PONTOS = 3` pontos são descartados.
-4. **Ordenação** por pontuação decrescente (desempate por id, o que torna o resultado determinístico). Retornam até 4 resultados: o primeiro é a melhor resposta e os demais são alternativas.
-
-### Comportamento com várias correspondências
-
-| Situação | Resultado |
+| Situação | Comportamento |
 |---|---|
-| Um registro se destaca | `ok`: mostra o melhor e informa quantas orientações foram encontradas |
-| Os dois primeiros ficam a ≤ `MARGEM = 1` ponto **e** têm subtemas diferentes | `ambigua`: o usuário escolhe entre até 4 opções |
-| Nenhum registro atinge a pontuação mínima | `sem_correspondencia`: aviso de limitação, sem inventar resposta |
+| Entrada vazia | Pede para digitar a dúvida ou escolher um tema |
+| Entrada inválida (só números/símbolos, mais de 300 caracteres) | Pede palavras simples sobre o assunto |
+| Dado pessoal (padrão de CPF) | Recusa e orienta a reescrever sem dados pessoais |
+| Sem correspondência | Avisa que não há base confiável, não inventa resposta, lista os temas disponíveis |
+| Consulta ambígua | Pergunta qual assunto a pessoa quis dizer |
+| Opção de menu inexistente | Mensagem de erro e nova escolha |
 
----
-
-## 6. Regras de resposta e modelos de prompt/instrução
-
-A resposta é gerada **exclusivamente a partir da base** (sem modelo de IA externo e sem API). As instruções de cada modelo estão documentadas no dicionário `MODELOS` do código.
-
-### Modelo A — Direto
-
-- **Papel:** guia breve.
-- **Formato:** orientação + fonte (+ aviso de confirmação quando aplicável).
-- **Regra:** só usar a base e citar a fonte.
-
-```
-<orientação>
-Fonte: <URL>
-Aviso: Confirme requisitos, prazos e valores atuais na fonte oficial antes de agir.
-```
-
-### Modelo B — Estruturado (padrão)
-
-- **Papel:** assistente **não oficial**.
-- **Formato:** `ASSUNTO / ORIENTAÇÃO / FONTE / VERIFICADO EM / AVISO / NOTA`.
-- **Regras:** só usar a base, citar fonte **e data**, avisar que não é oficial e destacar a necessidade de confirmação.
-
-```
-ASSUNTO: CPF (DOC-003)
-ORIENTAÇÃO: <texto>
-FONTE: <URL>
-VERIFICADO EM: <data ou "pendente de conferência">
-AVISO: Confirme requisitos, prazos e valores atuais na fonte oficial antes de agir.
-NOTA: Protótipo educacional: não é atendimento oficial nem tem ligação com órgãos públicos.
-```
-
-O usuário alterna entre os modelos pela opção 3 do menu.
-
-### Comparação dos modelos
-
-Os dois modelos foram avaliados nas consultas que retornaram resposta (`status = ok`), com **5 critérios objetivos**: (1) cita a fonte, (2) informa a data de verificação, (3) avisa que não é oficial, (4) destaca confirmação quando exigida, (5) usa rótulos de seção.
-
-| Modelo | Critérios atendidos (média) |
-|---|:---:|
-| A — Direto | **2,00 / 5** |
-| B — Estruturado | **5,00 / 5** |
-
-**Conclusão:** o **Modelo B** é mais claro e consistente, pois sempre expõe fonte, data, natureza não oficial e aviso de confirmação, o que atende melhor ao requisito de transparência. O Modelo A é mais curto e pode servir para consultas rápidas. *Observação:* os critérios favorecem naturalmente o formato mais completo; a comparação mede consistência e transparência, não preferência de leitura.
-
-### Tratamento de limitações
-
-| Situação | Mensagem do sistema |
-|---|---|
-| Entrada vazia | Pede que a pessoa escreva a dúvida ou escolha um tema |
-| Entrada inválida (só números/símbolos ou mais de 300 caracteres) | Pede palavras simples sobre o assunto |
-| Dados pessoais (padrão de CPF) | Recusa a consulta e orienta a reescrever sem dados pessoais |
-| Sem correspondência | Informa que não há base confiável, não responde por conta própria, lista os temas disponíveis e sugere procurar o órgão responsável |
-| Ambiguidade | Pergunta qual assunto a pessoa quis dizer |
-| Opção de menu vazia ou inexistente | Mensagem específica e novo pedido de escolha |
-
----
-
-## 7. Exemplos de uso
-
-**Pergunta direta**
+## 5. Exemplos
 
 ```
 > Como emitir a segunda via do CPF?
 ASSUNTO: CPF (DOC-003)
-ORIENTAÇÃO: ...
+ORIENTAÇÃO: O comprovante de inscrição no CPF pode ser emitido gratuitamente no site da Receita Federal, no portal/app gov.br ou no e-CAC. [...]
 FONTE: https://www.gov.br/pt-br/servicos/obter-cartao-de-cpf
 VERIFICADO EM: 2026-11-14
 NOTA: Protótipo educacional: não é atendimento oficial nem tem ligação com órgãos públicos.
 
-Assuntos relacionados:
-  1. CPF: Como me inscrever no CPF pela primeira vez?
-  2. Identidade (RG/CIN): Como solicitar a primeira via da Carteira de Identidade Nacional (CIN)?
-  0. Voltar ao menu
+> segunda via
+Sua pergunta pode ser sobre mais de um assunto. Qual?
+  1. CPF: Como obter a segunda via ou comprovante do CPF?
+  2. Certidões: Como pedir a segunda via da certidão de nascimento ou casamento?
+
+> Qual a previsão do tempo para amanhã?
+Não encontrei informação confiável sobre isso na base, então não vou arriscar uma resposta. [...]
+
+> meu cpf é 123.456.789-09, e agora?
+Parece um número de documento. Por privacidade, não informe dados pessoais; reescreva sem eles.
 ```
 
-**Reformulação:** `fui demitido, como peço o seguro-desemprego?` → `SRV-005` (fonte: gov.br/trabalho-e-emprego).
+## 6. Testes e indicadores
 
-**Consulta ambígua:** `segunda via` → o sistema pergunta se é sobre CPF, certidão, etc.
+**Plano:** 19 casos em `data/perguntas_teste.json` (7 diretas, 5 reformulações, 2 fora do tema, 5 de limite), cada um com a resposta esperada. O tempo é a média de 200 repetições por consulta. Resultados completos em `docs/resultados_testes.csv`.
 
-**Fora do tema:** `Qual a previsão do tempo para amanhã?` → "Não encontrei informação confiável sobre isso na base, então não vou arriscar uma resposta..." + lista de temas.
-
-**Dados pessoais:** `meu cpf é 123.456.789-09, e agora?` → "Parece um número de documento. Por privacidade, não informe dados pessoais; reescreva sem eles."
-
-**Entrada vazia:** → "Você não digitou nada. Escreva sua dúvida ou escolha um tema no menu."
-
----
-
-## 8. Plano de testes, indicadores e resultados
-
-### Plano
-
-`data/perguntas_teste.json` contém **19 casos** (mínimo exigido: 12):
-
-| Tipo | Qtde | Objetivo |
-|---|:---:|---|
-| Direta | 7 | Pergunta clara com registro esperado |
-| Reformulação | 5 | Linguagem informal ou indireta |
-| Fora do tema | 2 | Deve resultar em "sem resposta" |
-| Limite | 5 | Entrada vazia, ambígua, só símbolos, dado pessoal e dúvida sem base |
-
-Cada caso informa a resposta esperada (um id, `SEM_RESPOSTA`, `ENTRADA_INVALIDA` ou `AMBIGUA`). O tempo é medido com `time.perf_counter()` como a **média de 200 repetições** por consulta. Os resultados completos ficam em `docs/resultados_testes.csv`.
-
-### Resultados obtidos
-
-| ID | Tipo | Esperado | Obtido | Resultado | Tempo (ms) |
-|---|---|---|---|:---:|---:|
-| T01 | direta | DOC-001 | DOC-001 | ✅ | 0,5428 |
-| T02 | reformulação | DOC-001 | DOC-001 | ✅ | 0,5353 |
-| T03 | direta | DOC-002 | DOC-002 | ✅ | 0,5405 |
-| T04 | direta | DOC-003 | DOC-003 | ✅ | 0,5429 |
-| T05 | reformulação | DOC-003 | DOC-003 | ✅ | 0,5472 |
-| T06 | direta | DOC-005 | DOC-005 | ✅ | 0,5463 |
-| T07 | reformulação | DOC-007 | DOC-007 | ✅ | 0,5404 |
-| T08 | direta | SRV-002 | SRV-002 | ✅ | 0,5443 |
-| T09 | reformulação | SRV-005 | SRV-005 | ✅ | 0,5353 |
-| T10 | direta | DIR-001 | DIR-001 | ✅ | 0,5408 |
-| T11 | reformulação | DIR-003 | DIR-003 | ✅ | 0,5415 |
-| T12 | direta | COM-001 | COM-001 | ✅ | 0,5300 |
-| T13 | fora do tema | SEM_RESPOSTA | sem_correspondencia | ✅ | 0,7510 |
-| T14 | fora do tema | SEM_RESPOSTA | sem_correspondencia | ✅ | 0,5805 |
-| T15 | limite | ENTRADA_INVALIDA | vazia | ✅ | 0,0001 |
-| T16 | limite | AMBIGUA | ambigua | ✅ | 0,5259 |
-| T17 | limite | ENTRADA_INVALIDA | invalida | ✅ | 0,5234 |
-| T18 | limite | ENTRADA_INVALIDA | dados_pessoais | ✅ | 0,0006 |
-| T19 | limite | SEM_RESPOSTA | sem_correspondencia | ✅ | 0,5347 |
-
-### Indicadores
-
-| Indicador | Valor |
+| Indicador | Resultado |
 |---|---|
-| Taxa de acerto | **19/19 = 100,0 %** |
+| Taxa de acerto | **19/19 = 100 %** |
 | Tempo médio de consulta | **0,4949 ms** |
-| Modelo A (critérios atendidos) | 2,00 / 5 |
-| Modelo B (critérios atendidos) | 5,00 / 5 |
+| Modelo A / Modelo B | 2,00/5 · 5,00/5 |
 
-### Teste de facilidade de uso
+**Teste de facilidade de uso** (`<preencher com o teste real>`):
 
-> **Preencher com os dados reais do teste (mínimo: 1 usuário ou roteiro de tarefas).** Sugestão de roteiro:
-
-| Tarefa | Concluída? | Tempo | Dificuldades observadas |
+| Tarefa | Concluída? | Tempo | Dificuldades |
 |---|:---:|---|---|
-| 1. Encontrar como tirar o CPF pelo menu de temas | `<sim/não>` | `<s>` | `<...>` |
-| 2. Perguntar em texto como pedir seguro-desemprego | `<sim/não>` | `<s>` | `<...>` |
-| 3. Navegar até um assunto relacionado | `<sim/não>` | `<s>` | `<...>` |
-| 4. Digitar uma pergunta fora do tema e entender a resposta | `<sim/não>` | `<s>` | `<...>` |
+| Achar o CPF pelo menu de temas | `<sim/não>` | `<s>` | `<...>` |
+| Perguntar sobre seguro-desemprego em texto | `<sim/não>` | `<s>` | `<...>` |
+| Navegar até um assunto relacionado | `<sim/não>` | `<s>` | `<...>` |
 
-Perfil do usuário de teste: `<idade/familiaridade com tecnologia>` · Nota de facilidade (1 a 5): `<n>` · Comentários: `<...>`
+**Interpretação:** a busca atende bem às perguntas previstas, incluindo reformulações, e as limitações são tratadas corretamente. O tempo inferior a 1 ms mostra custo desprezível; na prática, o tempo do usuário é dominado por digitar e ler.
 
-### Interpretação
+**Limitações da avaliação:** os testes foram escritos pela própria equipe, o que tende a superestimar o acerto; a amostra é pequena; o tempo mede só a busca em memória; e não se verifica se as fontes continuam atualizadas.
 
-- A taxa de 100 % indica que a busca por palavras-chave com pontuação atende bem às perguntas previstas, inclusive reformulações informais, e que as limitações (vazio, símbolos, dado pessoal, ambiguidade, fora do tema) são tratadas corretamente.
-- O tempo médio inferior a 1 ms mostra que o custo computacional da busca é desprezível para uma base desse tamanho (21 registros). O tempo real percebido pelo usuário é dominado por digitar e ler.
-- O Modelo B supera o Modelo A em transparência (fonte, data, aviso e natureza não oficial).
+## 7. Cuidados
 
-### Limitações da avaliação
+- **Clareza e acessibilidade:** linguagem simples, menus numerados e mensagens de erro compreensíveis.
+- **Privacidade:** não pede nem armazena dados pessoais; recusa consultas com padrão de CPF.
+- **Informação não oficial:** o banner inicial e a nota nas respostas deixam claro que não é atendimento oficial; toda resposta traz fonte e data, e orientações sensíveis a mudanças pedem confirmação na fonte oficial.
 
-- Os casos de teste foram escritos pela própria equipe, que conhece a base. Isso tende a **superestimar a taxa de acerto**; usuários reais escreveriam de formas imprevistas.
-- Amostra pequena (19 casos) e sem variações de digitação (erros ortográficos, gírias).
-- O tempo mede só a busca em memória, não a experiência completa de uso.
-- A comparação entre modelos usa critérios objetivos de formato e **não mede a compreensão** do usuário.
-- A avaliação **não verifica se o conteúdo das orientações continua atualizado** na fonte oficial.
+## 8. Uso de IA
 
----
+Foi usada uma ferramenta de IA (Claude, da Anthropic) como apoio à revisão do projeto .
 
-## 9. Cuidados com clareza, acessibilidade, privacidade e informação não oficial
+Os resultados dos testes (taxa de acerto, tempos e comparação dos modelos) foram obtidos executando python src/sistema.py --testes, e não escritos manualmente.
+Os exemplos de respostas foram conferidos com a saída real do sistema.
+As orientações da base foram conferidas nas fontes oficiais indicadas em referencia.
+A IA não gera as respostas do assistente: o protótipo não usa modelo externo em tempo de execução, e todas as respostas vêm da base verificada.
 
-- **Não oficial:** o banner inicial e a nota nas respostas do Modelo B deixam claro que é um protótipo educacional, sem vínculo com órgãos públicos.
-- **Fonte e data:** toda orientação exibe a referência consultada e a data de verificação (ou "pendente de conferência").
-- **Aviso de confirmação:** orientações com `requer_confirmacao = true` pedem conferência de requisitos, prazos e valores na fonte oficial.
-- **Privacidade:** o sistema não pede, não armazena e não registra dados pessoais; se detecta padrão de CPF, recusa a consulta e orienta a reescrever sem ele.
-- **Sem invenção:** quando não há base suficiente, informa o limite, sugere alternativas e não gera resposta própria.
-- **Clareza e acessibilidade:** interface de texto, linguagem simples, menus numerados, mensagens de erro compreensíveis e entrada que aceita acentos e maiúsculas/minúsculas.
+## 9. Conclusões, limitações e melhorias
 
----
+**Conclusão:** o protótipo cumpre o fluxo completo (pergunta ou menu → busca → orientação com fonte, data e aviso → navegação por assuntos relacionados), com tratamento de erros e testes documentados.
 
-## 10. Uso de inteligência artificial
+**Limitações:** base pequena (21 registros, 4 temas); busca lexical, sem sinônimos nem tolerância a erros de digitação; informações podem ficar desatualizadas; interface só de texto.
 
-O uso de IA no desenvolvimento (apoio à elaboração de prompts, revisão de textos e planejamento de testes) e a validação crítica realizada estão registrados em [`docs/uso_ia.md`](docs/uso_ia.md). O protótipo **não** depende de nenhum modelo externo em tempo de execução: todas as respostas vêm da base verificada.
-
----
-
-## 11. Conclusões, limitações e melhorias
-
-### Conclusões
-
-O protótipo cumpre o fluxo completo: pergunta ou menu → busca → orientação com fonte, data e avisos → navegação por assuntos relacionados, com tratamento de erros e testes documentados.
-
-### Limitações
-
-- Base pequena (21 registros) e restrita a 4 temas.
-- A busca é lexical: não entende sinônimos que não estejam nas palavras-chave nem lida com erros de digitação.
-- As informações ficam desatualizadas se não forem reverificadas.
-- Interface apenas de texto.
-
-### Melhorias possíveis
-
-1. **Tolerância a erros de digitação e sinônimos**, com distância de edição (Levenshtein) ou lista de sinônimos, aumentando a taxa de acerto com usuários reais.
-2. **Ampliar o teste de usabilidade e os casos de teste** com pessoas externas à equipe e perguntas coletadas de forma anônima.
-3. **Rotina de revalidação** que sinalize registros com `data_verificacao` antiga ou vazia.
-4. Interface web ou gráfica com maior acessibilidade (contraste, leitor de tela).
-5. Ampliar a base com novos temas (educação, moradia, mobilidade).
-
----
-
-*Protótipo educacional desenvolvido para a Global Solution 2026.2 — FIAP. Não é um canal oficial.*
+**Melhorias:** (1) tolerar erros de digitação e sinônimos (distância de edição ou lista de sinônimos); (2) ampliar os testes com usuários externos e perguntas reais; (3) rotina que sinalize registros com data de verificação antiga; (4) interface web acessível.
