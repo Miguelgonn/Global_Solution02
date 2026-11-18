@@ -128,7 +128,6 @@ Parece um número de documento. Por privacidade, não informe dados pessoais; re
 
 **Interpretação:** a busca atende bem às perguntas previstas, incluindo reformulações, e as limitações são tratadas corretamente. O tempo inferior a 1 ms mostra custo desprezível; na prática, o tempo do usuário é dominado por digitar e ler.
 
-**Limitações da avaliação:** os testes foram escritos pela própria equipe, o que tende a superestimar o acerto; a amostra é pequena; o tempo mede só a busca em memória; e não se verifica se as fontes continuam atualizadas.
 
 ## 7. Cuidados
 
