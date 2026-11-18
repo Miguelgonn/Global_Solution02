@@ -134,7 +134,7 @@ Parece um número de documento. Por privacidade, não informe dados pessoais; re
 
 ## 8. Uso de IA
 
-## Uso de Inteligência Artificial
+### Uso de Inteligência Artificial
 
 Durante o desenvolvimento deste projeto, utilizamos ferramentas de Inteligência Artificial como apoio na organização, estruturação e otimização do código-fonte.
 
